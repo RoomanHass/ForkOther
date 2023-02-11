@@ -40,7 +40,8 @@ public class Main {
         for (int i = 0 ; i < products.length ; i++) {
             sumForBonus += prices[i] * counts[i];
         }
-        boolean doBonus = sum >= MIN_COST_FOR_BONUS;
+
+        boolean doBonus = sumForBonus >= MIN_COST_FOR_BONUS;
         for (int i = 0 ; i < products.length ; i++) {
             if (counts[i] != 0) {
                 boolean isOnSale = false;
@@ -50,6 +51,7 @@ public class Main {
                         break;
                     }
                 }
+
                 int amount = doBonus ? counts[i] + 1 : counts[i];
                 int rubles = counts[i] / 3 * 2 + counts[i] % 3;
 
