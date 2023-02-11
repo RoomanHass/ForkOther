@@ -2,15 +2,16 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static String[] products = { "Хлеб", "Пачка гречки", "Упаковка яиц", "Мороженка" };
-    public static int[] prices = { 50, 135, 65, 53 };
+    public static String[] products = {"Хлеб", "Пачка гречки", "Упаковка яиц", "Мороженка"};
+    public static int[] prices = {50, 135, 65, 53};
     public static int MIN_COST_FOR_BONUS = 1000;
+    public static String[] productsOnSale = {"Хлеб", "Мороженка"};
 
     public static void main(String[] args) {
         System.out.println("Добро пожаловать в магазин!");
         System.out.println("Наш ассортимент:");
-        for (int i = 0; i < products.length; i++) {
-            System.out.println("\t" + (i + 1) + ". " + products[i] + " за " + prices[i] + " за шт. ");
+        for (int i = 0 ; i < products.length ; i++) {
+            System.out.println("\t" + (i + 1) + ". " + products[i] + " за " + prices[i] + " руб/шт. ");
         }
         System.out.println();
 
@@ -35,11 +36,12 @@ public class Main {
 
         System.out.println("Ваша корзина покупок:");
         int sum = 0;
-        for (int i = 0; i < products.length; i++) {
-            sum += prices[i] * counts[i];
+        int sumForBonus = 0;
+        for (int i = 0 ; i < products.length ; i++) {
+            sumForBonus += prices[i] * counts[i];
         }
         boolean doBonus = sum >= MIN_COST_FOR_BONUS;
-        for (int i = 0; i < products.length; i++) {
+        for (int i = 0 ; i < products.length ; i++) {
             if (counts[i] != 0) {
                 boolean isOnSale = false;
                 for (String saleProduct : productsOnSale) {
@@ -48,12 +50,14 @@ public class Main {
                         break;
                     }
                 }
+                int amount = doBonus ? counts[i] + 1 : counts[i];
+                int rubles = counts[i] / 3 * 2 + counts[i] % 3;
 
                 if (isOnSale) {
-                    System.out.println("\t" + products[i] + " " + counts[i] + " шт. за " + (prices[i] * (counts[i] / 3 * 2 + counts[i] % 3)) + " руб. (распродажа!)");
-                    sum += prices[i] * (counts[i] / 3 * 2 + counts[i] % 3);
+                    System.out.println("\t" + products[i] + " " + amount + " шт. за " + (prices[i] * rubles) + " руб. (по акции!)");
+                    sum += prices[i] * rubles;
                 } else {
-                    System.out.println("\t" + products[i] + " " + counts[i] + " шт. за " + (prices[i] * counts[i]) + " руб.");
+                    System.out.println("\t" + products[i] + " " + amount + " шт. за " + (prices[i] * counts[i]) + " руб.");
                     sum += prices[i] * counts[i];
                 }
             }
